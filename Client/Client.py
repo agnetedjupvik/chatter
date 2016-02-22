@@ -15,16 +15,15 @@ class Client:
 
         # Set up the socket connection to the server
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        
-        # TODO: Finish init process with necessary code
+        self.msg = MessageReceiver(self, self.connection)
         self.run()
 
     def run(self):
         # Initiate the connection to the server
         self.connection.connect((self.host, self.server_port))
-        
+
     def disconnect(self):
-        # TODO: Handle disconnection
+        self.connection.close()
         pass
 
     def receive_message(self, message):
@@ -34,7 +33,7 @@ class Client:
     def send_payload(self, data):
         # TODO: Handle sending of a payload
         pass
-        
+
     # More methods may be needed!
 
 
