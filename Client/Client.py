@@ -16,6 +16,7 @@ class Client:
         # Set up the socket connection to the server
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.msg = MessageReceiver(self, self.connection)
+        #msg is a request sent from the client to the server
         self.run()
 
     def run(self):

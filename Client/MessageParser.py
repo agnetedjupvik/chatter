@@ -6,7 +6,7 @@ class MessageParser():
         self.possible_responses = {
             'error': self.parse_error,
             'info': self.parse_info,
-	    # More key:values pairs are needed	
+            'msg': self.parse
         }
 
     def parse(self, payload):
@@ -18,7 +18,7 @@ class MessageParser():
             # Response not valid
 
     def parse_error(self, payload):
-    
+
     def parse_info(self, payload):
-    
-    # Include more methods for handling the different responses... 
+
+    # Include more methods for handling the different responses...
