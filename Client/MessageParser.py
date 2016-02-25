@@ -21,4 +21,6 @@ class MessageParser():
 
     def parse_info(self, payload):
 
+    def parse_history(self, payload):
+
     # Include more methods for handling the different responses...
