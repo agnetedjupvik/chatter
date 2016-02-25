@@ -12,10 +12,9 @@ class MessageReceiver(Thread):
         """
         This method is executed when creating a new MessageReceiver object
         """
-
+        super(MessageReceiver, self).__init__() #Fjerner RuntimeError
         # Flag to run thread as a deamon
         self.daemon = True
-
         # TODO: Finish initialization of MessageReceiver
 
     def run(self):
