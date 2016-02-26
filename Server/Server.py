@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import SocketServer
+import json
 
 """
 Variables and functions that must be used by all the ClientHandler objects
@@ -25,7 +26,17 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         # Loop that listens for messages from the client
         while True:
             received_string = self.connection.recv(4096)
-            
+            print received_string.upper()
+            break
+'''            json.loads(received_string)
+            request = message['request']
+            if request == 'login':
+                pass
+            elif request == 'logout':
+                pass
+                #ogsavidere
+'''
+
             # TODO: Add handling of received payload from client
 
 
