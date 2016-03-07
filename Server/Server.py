@@ -2,11 +2,14 @@
 import SocketServer
 import json
 import time
+import re
 
 """
 Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
 """
+
+users = []
 
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
@@ -33,8 +36,16 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             response = {}
             print "Message Received"
             if request == 'login':
-                self.connection.send("Ok Command")
-                pass
+                response["timestamp"] = str(time.time()*1000)
+                response["sender"] = "Server"
+                if self.validate_user_name(content):
+                    users.append(content)
+                    response["response"] = "Info"
+                    response["content"] = "Login Successful"
+                else:
+                    response["response"] = "Error"
+                    response["content"] = "Username Taken"
+                self.connection.send(json.dumps(response))
             elif request == 'logout':
                 self.connection.send("Ok Command")
                 pass
@@ -54,8 +65,19 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 response["content"] = "Invalid Command"
                 self.connection.send(json.dumps(response))
                 pass;
-
+            break
             # TODO: Add handling of received payload from client
+
+    # Validate user name!
+    def validate_user_name(self, username):
+        if username in users:
+            return False
+        if re.match("^[A-Za-z0-9_-]*", username):
+            print "Regex Match"
+            return True
+        print "No Match"
+        return False
+
 
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
