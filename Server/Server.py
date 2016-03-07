@@ -51,7 +51,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                     del users[self]
                     return
                 elif request == "msg" and self.is_logged_in():
-                    self.connection.send("Ok Command")
+                    response["timestamp"] = str(time.time()*1000)
+                    response["sender"] = users[self]
+                    response["response"] = "msg"
+                    response["content"] = content
+                    self.connection.send(json.dumps(response))
                     pass
                 elif request == "names" and self.is_logged_in():
                     response["timestamp"] = str(time.time()*1000)
