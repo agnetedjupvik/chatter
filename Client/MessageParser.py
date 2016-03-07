@@ -21,13 +21,13 @@ class MessageParser():
 
     def parse_error(self, payload):
         error = payload['content']
-        print "There were an error: " + error
+        return "There were an error: " + error
 
     def parse_info(self, payload):
         info = payload['content']
-        print "Here's some information: " + info
+        return "Here's some information: " + info
 
     def parse_history(self, payload):
         msg = payload['content']
-        print "Message: " + msg
+        return "Message: " + msg
     # Include more methods for handling the different responses...
