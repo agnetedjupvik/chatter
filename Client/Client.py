@@ -39,7 +39,7 @@ class Client:
                 helpText = "Type login to log in. Type logout to log out. Type names to get all names."
                 print helpText
 
-            elif incoming == 'login':
+            elif incoming == 'login' and not self.hasLoggedOn:
                 print "Please type your desired username."
 
                 incoming = raw_input()
