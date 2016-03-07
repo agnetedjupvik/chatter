@@ -58,12 +58,11 @@ class Client:
                     jsonobj = json.dumps(obj)
                     self.send_payload(jsonobj)
                     self.disconnect()
-                    self.hasLoggedOn = False
                 except UnicodeDecodeError:
                     print "Invalid characters"
                     continue
 
-            elif incoming == 'logout' and not.self.hasLoggedOn:
+            elif incoming == 'logout' and not self.hasLoggedOn:
                 print "You have to be logged in to log out"
 
             elif incoming == 'names' and self.hasLoggedOn:
@@ -73,6 +72,18 @@ class Client:
                 except UnicodeDecodeError:
                     print "Invalid characters"
                 self.send_payload(jsonobj)
+
+            else:
+                if not self.hasLoggedOn:
+                    print "You have to be logged on to send a message. Please try again."
+                elif self.hasLoggedOn:
+                    obj = {"request": "msg", "content": incoming}
+                    try:
+                        jsonobj = json.dumps(obj)
+                    except UnicodeDecodeError:
+                        print "Invalid characters"
+                    self.send_payload(jsonobj)
+
 
 
     def disconnect(self):
