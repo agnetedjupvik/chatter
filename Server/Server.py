@@ -36,7 +36,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 content = message["content"]
                 response = {}
                 print "Message Received"
-                if request == 'login':
+                if request == 'login' and not self.is_logged_in():
                     response["timestamp"] = str(time.time()*1000)
                     response["sender"] = "Server"
                     if self.validate_user_name(content):
@@ -47,13 +47,13 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                         response["response"] = "Error"
                         response["content"] = "Username Taken"
                     self.connection.send(json.dumps(response))
-                elif request == 'logout':
+                elif request == 'logout' and self.is_logged_in():
                     del users[self]
                     return
-                elif request == "msg":
+                elif request == "msg" and self.is_logged_in():
                     self.connection.send("Ok Command")
                     pass
-                elif request == "names":
+                elif request == "names" and self.is_logged_in():
                     self.connection.send("Ok Command")
                     pass
                 elif request == "help":
@@ -77,6 +77,17 @@ class ClientHandler(SocketServer.BaseRequestHandler):
             print "Regex Match"
             return True
         print "No Match"
+        return False
+
+    def is_logged_in(self):
+        if self in users.keys:
+            return True
+        response = {}
+        response["timestamp"] = str(time.time()*1000)
+        response["sender"] = "Server"
+        response["response"] = "Error"
+        response["content"] = "You are not logged in."
+        self.connection.send(json.dumps(response))
         return False
 
 
