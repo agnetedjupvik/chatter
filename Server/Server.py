@@ -34,6 +34,14 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 pass
             elif request == 'logout':
                 pass
+            elif request == 'msg':
+                pass
+            elif request == 'names':
+                pass
+            elif request == 'help':
+
+            else:
+                pass
                 #ogsavidere
 '''
 
