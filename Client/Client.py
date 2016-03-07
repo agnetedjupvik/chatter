@@ -26,7 +26,7 @@ class Client:
         #msg is a request sent from the client to the server
         self.run()
         self.msg.run()
-        
+
     def run(self):
         # Initiate the connection to the server
         self.connection.connect((self.host, self.server_port))
@@ -36,8 +36,19 @@ class Client:
             incoming = raw_input()
 
             if incoming == 'help':
+                helpText = "Type login to log in. Type logout to log out. Type names to get all names."
+                print helpText
+            elif incoming == 'login':
+                print "Please type your desired username."
 
-
+                incoming = raw_input()
+                obj = {"request": "login", "content": incoming}
+                try:
+                    jsonobj = json.dumps(obj)
+                except UnicodeDecodeError:
+                    print "Invalid characters in username. Please try again."
+                self.send_payload(jsonobj)
+                self.hasLoggedOn = True
 
 
 
