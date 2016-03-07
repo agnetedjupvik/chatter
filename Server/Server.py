@@ -56,6 +56,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                     response["response"] = "msg"
                     response["content"] = content
                     self.connection.send(json.dumps(response))
+                    print(json.dumps(response))
                     pass
                 elif request == "names" and self.is_logged_in():
                     response["timestamp"] = str(time.time()*1000)

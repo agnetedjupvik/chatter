@@ -97,6 +97,8 @@ class Client:
         pass
 
     def receive_message(self, message):
+        print "Received message!"
+        print message
         parser = MessageParser()
         parsedMessage = parser.parse()
         print parsedMessage
