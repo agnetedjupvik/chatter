@@ -19,4 +19,5 @@ class MessageReceiver(Thread):
 
     def run(self):
         # TODO: Make MessageReceiver receive and handle payloads
+        print "helo"
         pass
