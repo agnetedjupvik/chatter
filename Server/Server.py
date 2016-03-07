@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 import SocketServer
 import json
+import time
+import re
 
 """
 Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
 """
+
+users = []
 
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
@@ -22,30 +26,58 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.ip = self.client_address[0]
         self.port = self.client_address[1]
         self.connection = self.request
-
+        print "New Handler Created"
         # Loop that listens for messages from the client
         while True:
             received_string = self.connection.recv(4096)
-            print received_string.upper()
-            break
-'''            json.loads(received_string)
-            request = message['request']
+            message = json.loads(received_string);
+            request = message["request"].lower()
+            content = message["content"]
+            response = {}
+            print "Message Received"
             if request == 'login':
-                pass
+                response["timestamp"] = str(time.time()*1000)
+                response["sender"] = "Server"
+                if self.validate_user_name(content):
+                    users.append(content)
+                    response["response"] = "Info"
+                    response["content"] = "Login Successful"
+                else:
+                    response["response"] = "Error"
+                    response["content"] = "Username Taken"
+                self.connection.send(json.dumps(response))
             elif request == 'logout':
+                self.connection.send("Ok Command")
                 pass
-            elif request == 'msg':
+            elif request == "msg":
+                self.connection.send("Ok Command")
                 pass
-            elif request == 'names':
+            elif request == "names":
+                self.connection.send("Ok Command")
                 pass
-            elif request == 'help':
-
+            elif request == "help":
+                self.connection.send("Ok Command")
+                pass
             else:
-                pass
-                #ogsavidere
-'''
-
+                response["timestamp"] = str(time.time()*1000)
+                response["sender"] = "Server"
+                response["response"] = "Error"
+                response["content"] = "Invalid Command"
+                self.connection.send(json.dumps(response))
+                pass;
+            break
             # TODO: Add handling of received payload from client
+
+    # Validate user name!
+    def validate_user_name(self, username):
+        if username in users:
+            return False
+        if re.match("^[A-Za-z0-9_-]*", username):
+            print "Regex Match"
+            return True
+        print "No Match"
+        return False
+
 
 
 class ThreadedTCPServer(SocketServer.ThreadingMixIn, SocketServer.TCPServer):
