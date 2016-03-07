@@ -5,7 +5,8 @@ class MessageParser():
         self.possible_responses = {
             'error': self.parse_error,
             'info': self.parse_info,
-            'msg': self.parse
+            'msg': self.parse,
+            'history': self.parse_history
         }
 
     def parse(self, payload):
