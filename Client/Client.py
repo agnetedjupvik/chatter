@@ -27,15 +27,6 @@ class Client:
         self.run()
         self.msg.run()
 
-        message = {}
-        message["request"] = "login"
-        message["content"] = "Espen"
-        self.connection.send(json.dumps(message))
-        print self.connection.recv(4096);
-        message["request"] = "logout"
-        self.connection.send(json.dumps(message))
-        print self.connection.recv(4096);
-
     def run(self):
         # Initiate the connection to the server
         self.connection.connect((self.host, self.server_port))
