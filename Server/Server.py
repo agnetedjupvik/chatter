@@ -36,7 +36,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 content = message["content"]
                 response = {}
                 print "Message Received"
-                if request == 'login' and not self.is_logged_in():
+                if request == 'login':
                     response["timestamp"] = str(time.time()*1000)
                     response["sender"] = "Server"
                     if self.validate_user_name(content):
@@ -54,7 +54,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                     self.connection.send("Ok Command")
                     pass
                 elif request == "names" and self.is_logged_in():
-                    self.connection.send("Ok Command")
+                    response["timestamp"] = str(time.time()*1000)
+                    response["sender"] = "Server"
+                    response["response"] = "Info"
+                    response["content"] = users.values()
+                    self.connection.send(json.dumps(response))
                     pass
                 elif request == "help":
                     self.connection.send("Ok Command")
@@ -80,8 +84,11 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         return False
 
     def is_logged_in(self):
-        if self in users.keys:
+        print "Checking logged in status..."
+        if self in users.keys():
+            print "OK"
             return True
+        print "Not ok"
         response = {}
         response["timestamp"] = str(time.time()*1000)
         response["sender"] = "Server"
