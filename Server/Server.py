@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 import SocketServer
 import json
+import time
 
 """
 Variables and functions that must be used by all the ClientHandler objects
@@ -22,21 +23,37 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         self.ip = self.client_address[0]
         self.port = self.client_address[1]
         self.connection = self.request
-
+        print "New Handler Created"
         # Loop that listens for messages from the client
         while True:
             received_string = self.connection.recv(4096)
-            print received_string.upper()
-            break
-'''            json.loads(received_string)
-            request = message['request']
+            message = json.loads(received_string);
+            request = message["request"].lower()
+            content = message["content"]
+            response = {}
+            print "Message Received"
             if request == 'login':
+                self.connection.send("Ok Command")
                 pass
             elif request == 'logout':
+                self.connection.send("Ok Command")
                 pass
-                #ogsavidere
-'''
-
+            elif request == "msg":
+                self.connection.send("Ok Command")
+                pass
+            elif request == "names":
+                self.connection.send("Ok Command")
+                pass
+            elif request == "help":
+                self.connection.send("Ok Command")
+                pass
+            else:
+                response["timestamp"] = str(time.time()*1000)
+                response["sender"] = "Server"
+                response["response"] = "Error"
+                response["content"] = "Invalid Command"
+                self.connection.send(json.dumps(response))
+                pass;
             # TODO: Add handling of received payload from client
 
 
