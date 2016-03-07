@@ -32,9 +32,6 @@ class Client:
         message["content"] = "Espen"
         self.connection.send(json.dumps(message))
         print self.connection.recv(4096);
-        message["request"] = "logout"
-        self.connection.send(json.dumps(message))
-        print self.connection.recv(4096);
 
     def run(self):
         # Initiate the connection to the server
