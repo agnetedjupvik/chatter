@@ -73,6 +73,9 @@ class Client:
                     print "Invalid characters"
                 self.send_payload(jsonobj)
 
+            elif incoming == 'history' and self.hasLoggedOn:
+                self.getHistory()
+
             else:
                 if not self.hasLoggedOn:
                     print "You have to be logged on to send a message. Please try again."
@@ -103,7 +106,10 @@ class Client:
         self.connection.send(data)
         pass
 
-        # More methods may be needed!
+    def getHistory(self):
+        obj = {"request": "history", "content": ""}
+        jsonobj = json.dumps(obj)
+        self.send_payload(jsonobj)
 
 
 if __name__ == '__main__':

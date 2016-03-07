@@ -5,7 +5,7 @@ class MessageParser():
         self.possible_responses = {
             'error': self.parse_error,
             'info': self.parse_info,
-            'msg': self.parse,
+            'msg': self.parse_msg,
             'history': self.parse_history
         }
 
@@ -18,6 +18,12 @@ class MessageParser():
         else:
             pass
             # Response not valid
+
+    def parse_msg(self, payload):
+        message = payload['content']
+        username = payload['sender']
+        result = username + ": " + message
+        return result
 
     def parse_error(self, payload):
         error = payload['content']
