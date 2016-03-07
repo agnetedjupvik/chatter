@@ -9,7 +9,7 @@ Variables and functions that must be used by all the ClientHandler objects
 must be written here (e.g. a dictionary for connected clients)
 """
 
-users = []
+users = {}
 
 class ClientHandler(SocketServer.BaseRequestHandler):
     """
@@ -29,48 +29,49 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         print "New Handler Created"
         # Loop that listens for messages from the client
         while True:
-            received_string = self.connection.recv(4096)
-            message = json.loads(received_string);
-            request = message["request"].lower()
-            content = message["content"]
-            response = {}
-            print "Message Received"
-            if request == 'login':
-                response["timestamp"] = str(time.time()*1000)
-                response["sender"] = "Server"
-                if self.validate_user_name(content):
-                    users.append(content)
-                    response["response"] = "Info"
-                    response["content"] = "Login Successful"
+            try:
+                received_string = self.connection.recv(4096)
+                message = json.loads(received_string);
+                request = message["request"].lower()
+                content = message["content"]
+                response = {}
+                print "Message Received"
+                if request == 'login':
+                    response["timestamp"] = str(time.time()*1000)
+                    response["sender"] = "Server"
+                    if self.validate_user_name(content):
+                        users[self] = content
+                        response["response"] = "Info"
+                        response["content"] = "Login Successful"
+                    else:
+                        response["response"] = "Error"
+                        response["content"] = "Username Taken"
+                    self.connection.send(json.dumps(response))
+                elif request == 'logout':
+                    del users[self]
+                    return
+                elif request == "msg":
+                    self.connection.send("Ok Command")
+                    pass
+                elif request == "names":
+                    self.connection.send("Ok Command")
+                    pass
+                elif request == "help":
+                    self.connection.send("Ok Command")
+                    pass
                 else:
+                    response["timestamp"] = str(time.time()*1000)
+                    response["sender"] = "Server"
                     response["response"] = "Error"
-                    response["content"] = "Username Taken"
-                self.connection.send(json.dumps(response))
-            elif request == 'logout':
-                self.connection.send("Ok Command")
+                    response["content"] = "Invalid Command"
+                    self.connection.send(json.dumps(response))
+                    pass;
+            except:
                 pass
-            elif request == "msg":
-                self.connection.send("Ok Command")
-                pass
-            elif request == "names":
-                self.connection.send("Ok Command")
-                pass
-            elif request == "help":
-                self.connection.send("Ok Command")
-                pass
-            else:
-                response["timestamp"] = str(time.time()*1000)
-                response["sender"] = "Server"
-                response["response"] = "Error"
-                response["content"] = "Invalid Command"
-                self.connection.send(json.dumps(response))
-                pass;
-            break
-            # TODO: Add handling of received payload from client
 
     # Validate user name!
     def validate_user_name(self, username):
-        if username in users:
+        if username in users.values():
             return False
         if re.match("^[A-Za-z0-9_-]*", username):
             print "Regex Match"

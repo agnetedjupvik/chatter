@@ -26,12 +26,15 @@ class Client:
         #msg is a request sent from the client to the server
         self.run()
         self.msg.run()
-        '''
+
         message = {}
         message["request"] = "login"
         message["content"] = "Espen"
         self.connection.send(json.dumps(message))
-        print self.connection.recv(4096);'''
+        print self.connection.recv(4096);
+        message["request"] = "logout"
+        self.connection.send(json.dumps(message))
+        print self.connection.recv(4096);
 
     def run(self):
         # Initiate the connection to the server
