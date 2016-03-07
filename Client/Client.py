@@ -62,7 +62,7 @@ class Client:
                     print "Invalid characters"
                     continue
 
-            elif incoming == 'logout' and not.self.hasLoggedOn:
+            elif incoming == 'logout' and not self.hasLoggedOn:
                 print "You have to be logged in to log out"
 
             elif incoming == 'names' and self.hasLoggedOn:
