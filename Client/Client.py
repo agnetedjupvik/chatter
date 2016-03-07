@@ -38,6 +38,7 @@ class Client:
             if incoming == 'help':
                 helpText = "Type login to log in. Type logout to log out. Type names to get all names."
                 print helpText
+
             elif incoming == 'login':
                 print "Please type your desired username."
 
@@ -49,6 +50,18 @@ class Client:
                     print "Invalid characters in username. Please try again."
                 self.send_payload(jsonobj)
                 self.hasLoggedOn = True
+
+            elif incoming == 'logout' and self.hasLoggedOn:
+                print "Logging out..."
+                obj = {"request": "logout", "content": ""}
+                try:
+                    jsonobj = json.dumps(obj)
+                    self.send_payload(jsonobj)
+                    self.disconnect()
+                    self.hasLoggedOn = False
+                except UnicodeDecodeError:
+                    print "Invalid characters"
+                    continue
 
 
 
