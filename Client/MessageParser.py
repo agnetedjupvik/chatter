@@ -19,11 +19,11 @@ class MessageParser():
             # Response not valid
 
     def parse_error(self, payload):
-        pass
+        self.payload = payload[0].get('error', '')
 
     def parse_info(self, payload):
-        pass
+        self.payload = payload[1].get('info', '')
 
     def parse_history(self, payload):
-        pass
+        self.payload = payload[2].get('msg', '')
     # Include more methods for handling the different responses...
