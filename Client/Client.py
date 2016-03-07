@@ -30,7 +30,14 @@ class Client:
     def run(self):
         # Initiate the connection to the server
         self.connection.connect((self.host, self.server_port))
-        print "Welcome to the chat!"
+        print "Welcome to the chat! Type help to get help."
+
+        while True:
+            incoming = raw_input()
+
+            if incoming == 'help':
+
+
 
 
 
@@ -42,7 +49,8 @@ class Client:
         pass
 
     def receive_message(self, message):
-        parsedMessage = MessageParser.parse()
+        parser = MessageParser()
+        parsedMessage = parser.parse()
         print parsedMessage
         pass
 
