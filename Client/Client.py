@@ -42,8 +42,8 @@ class Client:
         pass
 
     def receive_message(self, message):
-        # TODO: Handle incoming message
-
+        parsedMessage = MessageParser.parse()
+        print parsedMessage
         pass
 
     def send_payload(self, data):
