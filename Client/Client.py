@@ -26,31 +26,31 @@ class Client:
         #msg is a request sent from the client to the server
         self.run()
         self.msg.run()
-
-        message = {}
-        message["request"] = "login"
-        message["content"] = "Espen"
-        self.connection.send(json.dumps(message))
-        print self.connection.recv(4096);
-
+        
     def run(self):
         # Initiate the connection to the server
         self.connection.connect((self.host, self.server_port))
+        print "Welcome to the chat!"
+
+
 
     def disconnect(self):
+        print "Disconnecting..."
         self.connection.close()
+        self.hasLoggedOn = False
+        print "You are disconnected."
         pass
 
     def receive_message(self, message):
-        # TODO: Handle incoming message
-
+        parsedMessage = MessageParser.parse()
+        print parsedMessage
         pass
 
     def send_payload(self, data):
-        # TODO: Handle sending of a payload
+        self.connection.send(data)
         pass
 
-    # More methods may be needed!
+        # More methods may be needed!
 
 
 if __name__ == '__main__':

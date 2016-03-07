@@ -12,6 +12,7 @@ class MessageParser():
     def parse(self, payload):
         payload = json.loads(payload) # decode the JSON object
 
+
         if payload['response'] in self.possible_responses:
             return self.possible_responses[payload['response']](payload)
         else:
@@ -19,11 +20,14 @@ class MessageParser():
             # Response not valid
 
     def parse_error(self, payload):
-        self.payload = payload[0].get('error', '')
+        error = payload['content']
+        print "There were an error: " + error
 
     def parse_info(self, payload):
-        self.payload = payload[1].get('info', '')
+        info = payload['content']
+        print "Here's some information: " + info
 
     def parse_history(self, payload):
-        self.payload = payload[2].get('msg', '')
+        msg = payload['content']
+        print "Message: " + msg
     # Include more methods for handling the different responses...
