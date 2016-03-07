@@ -39,9 +39,15 @@ class Client:
     def run(self):
         # Initiate the connection to the server
         self.connection.connect((self.host, self.server_port))
+        print "Welcome to the chat!"
+
+
 
     def disconnect(self):
+        print "Disconnecting..."
         self.connection.close()
+        self.hasLoggedOn = False
+        print "You are disconnected."
         pass
 
     def receive_message(self, message):
@@ -49,10 +55,10 @@ class Client:
         pass
 
     def send_payload(self, data):
-        # TODO: Handle sending of a payload
+        self.connection.send(data)
         pass
 
-    # More methods may be needed!
+        # More methods may be needed!
 
 
 if __name__ == '__main__':
