@@ -15,14 +15,18 @@ class Client:
         """
         This method is run when creating a new Client object
         """
-
         # Set up the socket connection to the server
         self.connection = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.msg = MessageReceiver(self, self.connection)
+        self.host = host
+        self.server_port = server_port
+
+        self.hasLoggedOn = False
 
         #msg is a request sent from the client to the server
         self.run()
         self.msg.run()
+        '''
         message = {}
         message["request"] = "loginyuyu"
         message["content"] = "Espen"
@@ -30,7 +34,7 @@ class Client:
         print self.connection.recv(4096);
         message["request"] = "login"
         self.connection.send(json.dumps(message))
-        print self.connection.recv(4096);
+        print self.connection.recv(4096);'''
 
     def run(self):
         # Initiate the connection to the server
