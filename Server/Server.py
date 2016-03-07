@@ -31,7 +31,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         while True:
             try:
                 received_string = self.connection.recv(4096)
-                message = json.loads(received_string);
+                message = json.loads(received_string)
                 request = message["request"].lower()
                 content = message["content"]
                 response = {}

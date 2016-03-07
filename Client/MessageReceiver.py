@@ -15,14 +15,9 @@ class MessageReceiver(Thread):
         super(MessageReceiver, self).__init__() #Fjerner RuntimeError
         # Flag to run thread as a deamon
         self.daemon = True
-        self.client = client
-        self.connection = connection
+        # TODO: Finish initialization of MessageReceiver
 
     def run(self):
         # TODO: Make MessageReceiver receive and handle payloads
-        while True:
-            if self.client.hasLoggedOn:
-                message = self.connection.recv(4096)
-
-                if message:
-                    self.client.receive_message(message)
+        print "hello"
+        pass
