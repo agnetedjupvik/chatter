@@ -54,6 +54,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 response["content"] = "Invalid Command"
                 self.connection.send(json.dumps(response))
                 pass;
+
             # TODO: Add handling of received payload from client
 
 
