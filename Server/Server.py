@@ -97,7 +97,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
         response = {}
         response["timestamp"] = str(time.time()*1000)
         response["sender"] = "Server"
-        response["response"] = "Error"
+        response["response"] = "error"
         response["content"] = "You are not logged in."
         self.connection.send(json.dumps(response))
         return False
