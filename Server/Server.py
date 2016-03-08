@@ -41,10 +41,10 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                     response["sender"] = "Server"
                     if self.validate_user_name(content):
                         users[self] = content
-                        response["response"] = "Info"
+                        response["response"] = "info"
                         response["content"] = "Login Successful"
                     else:
-                        response["response"] = "Error"
+                        response["response"] = "error"
                         response["content"] = "Username Taken"
                     self.connection.send(json.dumps(response))
                 elif request == 'logout' and self.is_logged_in():
@@ -61,7 +61,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 elif request == "names" and self.is_logged_in():
                     response["timestamp"] = str(time.time()*1000)
                     response["sender"] = "Server"
-                    response["response"] = "Info"
+                    response["response"] = "info"
                     response["content"] = users.values()
                     self.connection.send(json.dumps(response))
                     pass
@@ -71,7 +71,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 else:
                     response["timestamp"] = str(time.time()*1000)
                     response["sender"] = "Server"
-                    response["response"] = "Error"
+                    response["response"] = "error"
                     response["content"] = "Invalid Command"
                     self.connection.send(json.dumps(response))
                     pass;

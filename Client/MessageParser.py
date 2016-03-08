@@ -31,9 +31,9 @@ class MessageParser():
 
     def parse_info(self, payload):
         info = payload['content']
-        return "Here's some information: " + info
+        result = "Here's some information: " + info
+        return result
 
     def parse_history(self, payload):
         history = payload['content']
         return "Message: " + history
-    # Include more methods for handling the different responses...
