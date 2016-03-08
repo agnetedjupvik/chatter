@@ -35,7 +35,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 request = message["request"].lower()
                 content = message["content"]
                 response = {}
-                print "Message Received"
+                print "Server Received message"
                 if request == 'login':
                     response["timestamp"] = str(time.time()*1000)
                     response["sender"] = "Server"
@@ -61,7 +61,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                 elif request == "names" and self.is_logged_in():
                     response["timestamp"] = str(time.time()*1000)
                     response["sender"] = "Server"
-                    response["response"] = "info"
+                    response["response"] = "names"
                     response["content"] = users.values()
                     self.connection.send(json.dumps(response))
                     pass

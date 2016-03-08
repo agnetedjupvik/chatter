@@ -6,7 +6,8 @@ class MessageParser():
             'error': self.parse_error,
             'info': self.parse_info,
             'msg': self.parse_msg,
-            'history': self.parse_history
+            'history': self.parse_history,
+            'names': self.parse_names
         }
 
     def parse(self, payload):
@@ -18,6 +19,19 @@ class MessageParser():
         else:
             pass
             # Response not valid
+    def parse_names(self, payload):
+        names = payload['content']
+        b=0
+        for a in names:
+            if b>1:
+                result+=","+a
+            else:
+                result = a
+            b=2
+
+
+        result = "Current users: "+result
+        return result
 
     def parse_msg(self, payload):
         message = payload['content']
