@@ -103,7 +103,7 @@ class Client:
         print "Received message!"
         print message
         parser = MessageParser()
-        parsedMessage = parser.parse()
+        parsedMessage = parser.parse(message)
         print parsedMessage
         pass
 
