@@ -23,13 +23,16 @@ class Client:
 
         self.hasLoggedOn = False
 
+        self.connection.connect((self.host, self.server_port))
         #msg is a request sent from the client to the server
+        print("Messager Reciever started")
+        self.msg.start()
+        print("Run method started")
         self.run()
-        self.msg.run()
+
 
     def run(self):
         # Initiate the connection to the server
-        self.connection.connect((self.host, self.server_port))
         print "Welcome to the chat! Type help to get help."
 
         while True:
