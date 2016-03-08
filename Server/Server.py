@@ -56,7 +56,6 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                     response["response"] = "msg"
                     response["content"] = content
                     self.broadcast(json.dumps(response))
-                    print(json.dumps(response))
                     pass
                 elif request == "names" and self.is_logged_in():
                     response["timestamp"] = str(time.time()*1000)
@@ -80,7 +79,6 @@ class ClientHandler(SocketServer.BaseRequestHandler):
 
     def broadcast(self, jsonobj):
         for user in users:
-            print user
             if user != self:
                 user.connection.send(jsonobj)
 
@@ -127,7 +125,7 @@ if __name__ == "__main__":
 
     No alterations are necessary
     """
-    HOST, PORT = 'localhost', 9998
+    HOST, PORT = '', 9998
     print 'Server running...'
 
     # Set up and initiate the TCP server
