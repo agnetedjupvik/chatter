@@ -55,7 +55,7 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                     response["sender"] = users[self]
                     response["response"] = "msg"
                     response["content"] = content
-                    self.connection.send(json.dumps(response))
+                    self.broadcast(json.dumps(response))
                     print(json.dumps(response))
                     pass
                 elif request == "names" and self.is_logged_in():
@@ -77,6 +77,13 @@ class ClientHandler(SocketServer.BaseRequestHandler):
                     pass;
             except:
                 pass
+
+    def broadcast(self, jsonobj):
+        for user in users:
+            print user
+            if user != self:
+                user.connection.send(jsonobj)
+
 
     # Validate user name!
     def validate_user_name(self, username):
