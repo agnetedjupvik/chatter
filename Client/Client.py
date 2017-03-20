@@ -27,7 +27,7 @@ class Client:
         #msg is a request sent from the client to the server
         print("Messager Reciever started")
         self.msg.start()
-        print("Run method started")
+        print("Run method started!")
         self.run()
 
 
